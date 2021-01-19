@@ -1,0 +1,51 @@
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+	"Parameters": {
+		"Tag": {
+			"Type": "String",
+			"Default": "latest"
+		},
+		"DesiredCount": {
+			"Type": "Number",
+			"Default": 1
+		},
+		"Cluster": {
+			"Type": "String",
+			"Default": "ECS-ECSAPP"
+		},
+		"Repository": {
+			"Type": "String",
+			"Default": "ecr-ecsapp"
+		}
+	},
+	"Resources": {
+		"Service": {
+			"Type": "AWS::ECS::Service",
+			"Properties": {
+				"Cluster": { "Ref": "Cluster" },
+				"DesiredCount": { "Ref": "DesiredCount" },
+				"TaskDefinition": { "Ref": "TaskDefinition1" }
+			}
+		},
+		"TaskDefinition1": {
+			"Type": "AWS::ECS::TaskDefinition",
+			"Properties": {
+				"ContainerDefinitions": [
+				{
+					"Name": "khan-app-ecs",
+					"Image": "ecr-ecsapp:latest",
+					"Cpu": "1",
+					"PortMappings": [ 
+					{
+						"ContainerPort": "8080",
+						"HostPort": "80"
+					} 
+					],
+					"Memory": "512",
+					"Essential": "true"
+				}
+			  ] 
+			}
+		}
+	}
+}

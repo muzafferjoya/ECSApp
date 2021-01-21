@@ -3,14 +3,15 @@ version: 0.2
 env:    
   variables:      
     AWS_DEFAULT_REGION: "us-east-1"
-    AWS_ACCOUNT_ID: "057333800527"
+    AWS_ACCOUNT_ID: "05***********"
     IMAGE_REPO_NAME: "ecr-ecsapp"
     IMAGE_TAG: "latest"
 
 phases:
   pre_build:
     commands:
-      - sudo yum update -y && yum install jq -y
+      - sudo apt-get -y
+      - sudo apt-get install jq -y
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION)
   build:
